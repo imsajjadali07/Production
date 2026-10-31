@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Garments Factory Checker Report</title>
-<meta name="theme-color" content="#1b3355">
+<meta name="theme-color" content="#0d141d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
    Design tokens
    ========================================================================== */
 :root{
-  color-scheme:light dark;
+  color-scheme:dark;
   /* Surfaces & text */
   --paper:#f3f5f9;--surface:#fff;--head:#f7f9fc;--tint:#e9eff8;
   --ink:#101d2e;--muted:#5a6a7e;
@@ -288,9 +288,7 @@ select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer
       <a href="#history" data-nav="history"><svg class="i"><use href="#i-hist"/></svg>History</a>
       <a href="#daily" data-nav="daily"><svg class="i"><use href="#i-day"/></svg>Daily</a>
     </nav>
-    <span class="conn" id="connStatus" role="status" data-state="wait">Connecting...</span>
     <a class="icon-btn" id="settingsLink" href="#settings" aria-label="Settings: point and checker names" title="Settings"><svg class="i"><use href="#i-sliders"/></svg></a>
-    <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch light or dark theme"><svg class="i"><use href="#i-moon"/></svg></button>
   </div>
 </header>
 
@@ -1289,15 +1287,8 @@ select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer
   }
 
   /* ================= THEME & TOAST ================= */
-  function applyTheme(t) {
-    document.documentElement.dataset.theme = t;
-    $('meta[name=theme-color]').content = t === 'dark' ? '#0d141d' : '#1b3355';
-  }
-  (function initTheme() {
-    let t = null;
-    try { t = localStorage.getItem('checker-theme'); } catch (e) { /* ignore */ }
-    applyTheme(t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
-  })();
+  document.documentElement.dataset.theme = 'dark';
+  $('meta[name=theme-color]').content = '#0d141d';
 
   let tt = null;
   function toast(msg) {
@@ -1378,12 +1369,6 @@ select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer
   }
 
   /* ================= ACTIONS ================= */
-  $('#themeBtn').addEventListener('click', () => {
-    const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    applyTheme(t);
-    try { localStorage.setItem('checker-theme', t); } catch (e) { /* ignore */ }
-  });
-
   document.addEventListener('click', ev => {
     const b = ev.target.closest('[data-action]');
     if (!b) return;
